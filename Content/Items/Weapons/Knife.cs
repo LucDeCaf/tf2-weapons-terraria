@@ -87,9 +87,13 @@ namespace TF2Weapons.Content.Items
                     Width = 1,
                     Height = 1,
                 };
-                CombatText.NewText(combatTextLocation, Color.LimeGreen, 950, dramatic: true, dot: false);
-                // CombatText.NewText(combatTextLocation, Color.Black, 950);
+                CombatText.NewText(combatTextLocation, Color.LimeGreen, 950, dramatic: true);
             }
+        }
+
+        public override void UseAnimation(Player player)
+        {
+            base.UseAnimation(player);
         }
     }
 }
