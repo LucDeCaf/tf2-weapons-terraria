@@ -11,18 +11,23 @@ namespace TF2Weapons.Content.Items
 
         public override void SetDefaults()
         {
+            Item.width = 20;
+            Item.height = 20;
+            Item.scale = 2f;
+
+            Item.DamageType = DamageClass.Melee;
             Item.damage = 5;
             Item.knockBack = 1;
-            Item.DamageType = DamageClass.Melee;
-            Item.width = 32;
-            Item.height = 32;
+            Item.crit = 0;
+
             Item.useTime = 10;
             Item.useAnimation = 10;
-            Item.autoReuse = false;
             Item.useStyle = ItemUseStyleID.Swing;
+            Item.autoReuse = false;
+            Item.UseSound = SoundID.Item1;
+
             Item.value = Item.buyPrice(silver: 50);
             Item.ChangePlayerDirectionOnShoot = false;
-            Item.UseSound = SoundID.Item1;
         }
 
         public override void AddRecipes()
@@ -89,11 +94,6 @@ namespace TF2Weapons.Content.Items
                 };
                 CombatText.NewText(combatTextLocation, Color.LimeGreen, 950, dramatic: true);
             }
-        }
-
-        public override void UseAnimation(Player player)
-        {
-            base.UseAnimation(player);
         }
     }
 }
