@@ -1,0 +1,14 @@
+# This file will automatically update with entries for new content after a build and reload.
+
+Items: {
+	Knife: {
+		DisplayName: Knife
+		Tooltip:
+			'''
+			Insta-kills opponents when backstabbed
+			"Right behind you."
+			'''
+	}
+}
+
+Projectiles.KnifeProjectile.DisplayName: Knife Projectile

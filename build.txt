@@ -1,0 +1,3 @@
+displayName = TF2 Weapons
+author = LucDeCaf
+version = 0.1
