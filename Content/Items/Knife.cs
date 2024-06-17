@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -37,37 +38,57 @@ namespace TF2Weapons.Content.Items
             testRecipe.Register();
         }
 
-
         /// <summary>
-        /// Returns true if the stabber is in position to backstab the stabee.
+        /// Returns true if the attacker is in position to backstab the target.
         /// This function doesn't care how far apart the two are, so a bounds check of sorts
         /// must be done separately to prevent world-length stabs.
         /// </summary>
-        public static bool CanBackstab(Entity stabber, Entity stabee)
+        public static bool CanBackstab(Entity attacker, Entity target)
         {
             // You can't stab the air and the air can't stab you
-            if (stabber == null | stabee == null)
+            if (attacker == null | target == null)
             {
-                Main.NewText($"Stabber or stabee not found ({stabber}, {stabee})");
                 return false;
             }
 
             // Has to be a backstab, not a frontstab
-            if (stabber.direction != stabee.direction)
+            if (attacker.direction != target.direction)
             {
-                Main.NewText("Not facing same direction");
                 return false;
             }
 
-            if (stabber.direction == 1)
+            //? Checks if attacker is actually behind target, but TF2 doesn't work that
+            //? way so I'm leaving it out (at least for now)
+            // if (attacker.direction == 1)
+            // {
+            //     // If facing right, target must be on right
+            //     return attacker.position.X <= target.position.X;
+            // }
+            // else
+            // {
+            //     // If facing left, target must be on left
+            //     return attacker.position.X >= target.position.X;
+            // }
+
+            return true;
+        }
+
+        public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers)
+        {
+            bool isBackstab = CanBackstab(player, target);
+
+            if (isBackstab)
             {
-                // If facing right, target must be on right
-                return stabber.position.X <= stabee.position.X;
-            }
-            else
-            {
-                // If facing left, target must be on left
-                return stabber.position.X >= stabee.position.X;
+                modifiers.SetInstantKill();
+
+                Rectangle combatTextLocation = new()
+                {
+                    Location = target.Center.ToPoint(),
+                    Width = 1,
+                    Height = 1,
+                };
+                CombatText.NewText(combatTextLocation, Color.LimeGreen, 950, dramatic: true, dot: false);
+                // CombatText.NewText(combatTextLocation, Color.Black, 950);
             }
         }
     }
